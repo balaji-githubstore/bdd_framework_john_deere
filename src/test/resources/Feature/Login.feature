@@ -11,12 +11,15 @@ Feature: Login
     And I click on login
     Then I should get the error message as 'Invalid username or password'
 
-  Scenario: Valid Credential1
+  Scenario Outline: Valid Credential
     Given I have browser with OpenEMR page
-    When I enter username as 'admin'
-    And I enter password as 'pass'
-    And I select the language 'English (Indian)'
+    When I enter username as '<username>'
+    And I enter password as '<password>'
+    And I select the language '<language>'
     And I click on login
     Then I should get access to the dashboard with title as 'OpenEMR'
 
-    
+    Examples: 
+      | username  | password  | language         |
+      | admin     | pass      | English (Indian) |
+      | physician | physician | English (Indian) |

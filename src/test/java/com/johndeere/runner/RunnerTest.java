@@ -11,7 +11,7 @@ import io.cucumber.junit.CucumberOptions;
 		,publish = true
 		,monochrome = true
 		,plugin = {"pretty","html:target/cucumber-report.html"}
-		,dryRun = true
+		//,dryRun = true
 		)
 
 @RunWith(Cucumber.class)

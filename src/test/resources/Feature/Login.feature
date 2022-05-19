@@ -8,7 +8,7 @@ Feature: Login
   Background: 
     Given I have browser with OpenEMR page
 
-  @high @invalid
+  @high @invalid @bala
   Scenario: Invalid Credential
     When I enter username as 'john'
     And I enter password as 'john123'
@@ -28,3 +28,5 @@ Feature: Login
       | username  | password  | language         |
       | admin     | pass      | English (Indian) |
       | physician | physician | English (Indian) |
+      
+ 

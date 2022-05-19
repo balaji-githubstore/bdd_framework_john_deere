@@ -56,5 +56,10 @@ public class LoginSteps {
 		String actualTitle = driver.getTitle();
 		Assert.assertEquals(expectedTitle, actualTitle);
 	}
-
+	@Then("I should get the error message as {string}")
+	public void i_should_get_the_error_message_as(String expectedError) {
+		
+		String actualError = driver.findElement(By.xpath("//*[contains(text(),'Invalid')]")).getText();
+		Assert.assertEquals(expectedError,actualError);
+	}
 }

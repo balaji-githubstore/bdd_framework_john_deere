@@ -1,38 +1,40 @@
 package com.johndeere.stepdefn;
 
-import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.johndeere.base.AutomationHooks;
 import com.johndeere.pages.DashboardPage;
-import com.johndeere.pages.LoginPage;
 import com.johndeere.pages.PatientDashboardPage;
 import com.johndeere.pages.SearchOrAddPatientPage;
 
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
+	
 public class PatientSteps {
+	private AutomationHooks hooks;
 	private DashboardPage dashboard; 
 	private SearchOrAddPatientPage sadp;
 	private PatientDashboardPage pdp;
 	
 	private static String actualAlertText;
 	
+	public PatientSteps(AutomationHooks hooks)
+	{
+		this.hooks=hooks;
+		initializePageObject();
+	}
 	
 	public void initializePageObject()
 	{
-		dashboard=new DashboardPage(AutomationHooks.driver);
-		sadp=new SearchOrAddPatientPage(AutomationHooks.driver);
-		pdp=new PatientDashboardPage(AutomationHooks.driver);
+		dashboard=new DashboardPage(hooks.driver);
+		sadp=new SearchOrAddPatientPage(hooks.driver);
+		pdp=new PatientDashboardPage(hooks.driver);
 	}
 
 	@When("I click on Patient menu")
@@ -65,8 +67,8 @@ public class PatientSteps {
 		sadp.enterFirstname(lists.get(0).get("firstname"));
 		sadp.enterLastname(lists.get(0).get("lastname"));
 
-		AutomationHooks.driver.findElement(By.id("form_DOB")).sendKeys(lists.get(0).get("dob"));
-		new Select(AutomationHooks.driver.findElement(By.id("form_sex")))
+		hooks.driver.findElement(By.id("form_DOB")).sendKeys(lists.get(0).get("dob"));
+		new Select(hooks.driver.findElement(By.id("form_sex")))
 				.selectByVisibleText(lists.get(0).get("gender"));
 	}
 

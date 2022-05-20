@@ -25,5 +25,5 @@ Feature: Patient
 
     Examples: 
       | firstname | lastname | gender | dob        | licencenumber | expectedalert | expectedpatientname                   |
-      | John      | Wick     | Male   | 2022-05-18 | E120          | Toba          | Medical Record Dashboard - John Wick  |
-      | Peter     | Paul     | Male   | 2022-05-18 | R3030         | Toba          | Medical Record Dashboard - Peter Paul |
+      | John      | Wick     | Male   | 2022-05-20 | E120          | Toba          | Medical Record Dashboard - John Wick  |
+      | Peter     | Paul     | Male   | 2022-05-20 | R3030         | Toba          | Medical Record Dashboard - Peter Paul |

@@ -64,5 +64,7 @@ public class LoginSteps  {
 		
 		String actualError = LoginPage.getInvalidErrorMessage();
 		Assert.assertEquals(expectedError,actualError);
+		
+		Assert.fail();
 	}
 }

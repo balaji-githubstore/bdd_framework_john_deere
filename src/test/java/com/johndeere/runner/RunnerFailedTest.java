@@ -6,7 +6,7 @@ import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 
 @CucumberOptions(
-		features = {"src/test/resources/Feature"}
+		features = {"@target/rerun.txt"}
 		,glue = {"com.johndeere.stepdefn","com.johndeere.base"}
 		,publish = true
 		,monochrome = true
@@ -17,6 +17,6 @@ import io.cucumber.junit.CucumberOptions;
 		)
 
 @RunWith(Cucumber.class)
-public class RunnerTest {
+public class RunnerFailedTest {
 
 }

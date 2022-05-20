@@ -29,6 +29,7 @@ public class LoginSteps  {
 		AutomationHooks.driver.manage().window().maximize();
 		AutomationHooks.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
 		AutomationHooks.driver.get("http://demo.openemr.io/b/openemr");
+		
 	}
 
 	@When("I enter username as {string}")

@@ -11,6 +11,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.johndeere.base.AutomationHooks;
+import com.johndeere.pages.DashboardPage;
+import com.johndeere.pages.PatientDashboardPage;
+import com.johndeere.pages.SearchOrAddPatientPage;
 
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Then;
@@ -21,12 +24,12 @@ public class PatientSteps {
 
 	@When("I click on Patient menu")
 	public void i_click_on_patient_menu() {
-		AutomationHooks.driver.findElement(By.xpath("//div[text()='Patient']")).click();
+		DashboardPage.clickOnPatient();
 	}
 
 	@When("I click on New search menu")
 	public void i_click_on_new_search_menu() {
-		AutomationHooks.driver.findElement(By.xpath("//div[text()='New/Search']")).click();
+		DashboardPage.clickOnNewSearch();
 	}
 
 	@When("I fill the form")
@@ -46,10 +49,9 @@ public class PatientSteps {
 		System.out.println(lists.get(0).get("gender"));
 		System.out.println(lists.get(0).get("licencenumber"));
 
-		AutomationHooks.driver.switchTo().frame(AutomationHooks.driver.findElement(By.xpath("//iframe[@name='pat']")));
+		SearchOrAddPatientPage.enterFirstname(lists.get(0).get("firstname"));
+		SearchOrAddPatientPage.enterLastname(lists.get(0).get("lastname"));
 
-		AutomationHooks.driver.findElement(By.id("form_fname")).sendKeys(lists.get(0).get("firstname"));
-		AutomationHooks.driver.findElement(By.id("form_lname")).sendKeys(lists.get(0).get("lastname"));
 		AutomationHooks.driver.findElement(By.id("form_DOB")).sendKeys(lists.get(0).get("dob"));
 		new Select(AutomationHooks.driver.findElement(By.id("form_sex")))
 				.selectByVisibleText(lists.get(0).get("gender"));
@@ -57,49 +59,33 @@ public class PatientSteps {
 
 	@When("I click on create new patient")
 	public void i_click_on_create_new_patient() {
-		AutomationHooks.driver.findElement(By.id("create")).click();
-
-		AutomationHooks.driver.switchTo().defaultContent();
+		SearchOrAddPatientPage.clickOnCreateNewPatient();
 	}
 
 	@When("I click on Confirm Create New Patient")
 	public void i_click_on_confirm_create_new_patient() {
-		AutomationHooks.driver.switchTo()
-				.frame(AutomationHooks.driver.findElement(By.xpath("//iframe[@id='modalframe']")));
-		AutomationHooks.driver.findElement(By.xpath("//input[@value='Confirm Create New Patient']")).click();
-		AutomationHooks.driver.switchTo().defaultContent();
+		SearchOrAddPatientPage.clickOnConfirmCreateNewPatient();
 	}
 
 	@When("I handle the alert")
 	public void i_handle_the_alert() {
-		WebDriverWait wait = new WebDriverWait(AutomationHooks.driver, Duration.ofSeconds(50));
-		wait.until(ExpectedConditions.alertIsPresent());
-
-		actualAlertText = AutomationHooks.driver.switchTo().alert().getText();
-		AutomationHooks.driver.switchTo().alert().accept();
+		actualAlertText = PatientDashboardPage.getTextAndHandleAlert();
 	}
 
 	@When("I handle the happybirthday pop if available")
 	public void i_handle_the_happybirthday_pop_if_available() {
 		// presence of element
-		if (AutomationHooks.driver.findElements(By.xpath("//div[@class='closeDlgIframe']")).size() > 0) {
-			AutomationHooks.driver.findElement(By.xpath("//div[@class='closeDlgIframe']")).click();
-		}
+		PatientDashboardPage.clickOnCloseHappyBirthday();
 	}
 
 	@Then("alert message should contains {string}")
 	public void alert_message_should_contains(String expectedAlert) {
-
 		Assert.assertTrue(actualAlertText.contains(expectedAlert));
 	}
 
 	@Then("I should see the added patient details as {string}")
 	public void i_should_see_the_added_patient_details_as(String expectedPatient) {
-		AutomationHooks.driver.switchTo().frame(AutomationHooks.driver.findElement(By.xpath("//iframe[@name='pat']")));
-
-		String actualValue = AutomationHooks.driver.findElement(By.xpath("//h2[contains(text(),'Record')]")).getText()
-				.trim();
-		
+		String actualValue = PatientDashboardPage.getAddedPatientDetail();
 		Assert.assertEquals(expectedPatient, actualValue);
 	}
 

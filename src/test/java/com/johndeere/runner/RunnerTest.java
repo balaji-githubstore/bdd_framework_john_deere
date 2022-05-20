@@ -12,7 +12,7 @@ import io.cucumber.junit.CucumberOptions;
 		,monochrome = true
 		,plugin = {"pretty","html:target/cucumber-report.html","json:target/cucumber-report.json"}
 		//,dryRun = true
-		,tags = "@demo"
+		,tags = "@valid or @patient"
 		)
 
 @RunWith(Cucumber.class)

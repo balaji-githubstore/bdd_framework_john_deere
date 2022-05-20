@@ -5,12 +5,14 @@ import org.openqa.selenium.support.ui.Select;
 
 import com.johndeere.base.AutomationHooks;
 
+
 public class LoginPage {
 	private static By usernameLocator=By.id("authUser");
 	private static By passwordLocator=By.id("clearPass");
 	private static By languageLocator=By.xpath("//select[@name='languageChoice']");
 	private static By loginLocator=By.cssSelector("#login-button");
 	private static By errorLocator=By.xpath("//*[contains(text(),'Invalid')]");
+	private static By ackLicCertLocator=By.partialLinkText("Certification");
 	
 	public static void enterUsername(String username)
 	{
@@ -36,6 +38,11 @@ public class LoginPage {
 	public static String getInvalidErrorMessage()
 	{
 		return AutomationHooks.driver.findElement(errorLocator).getText();
+	}
+	
+	public static void clickOnAckLicCert()
+	{
+		AutomationHooks.driver.findElement(ackLicCertLocator).click();
 	}
 	
 }

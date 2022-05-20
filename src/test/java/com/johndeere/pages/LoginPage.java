@@ -1,48 +1,47 @@
 package com.johndeere.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
 
-import com.johndeere.base.AutomationHooks;
 
+public class LoginPage  {
+	private By usernameLocator = By.id("authUser");
+	private By passwordLocator = By.id("clearPass");
+	private By languageLocator = By.xpath("//select[@name='languageChoice']");
+	private By loginLocator = By.cssSelector("#login-button");
+	private By errorLocator = By.xpath("//*[contains(text(),'Invalid')]");
+	private By ackLicCertLocator = By.partialLinkText("Certification");
 
-public class LoginPage {
-	private static By usernameLocator=By.id("authUser");
-	private static By passwordLocator=By.id("clearPass");
-	private static By languageLocator=By.xpath("//select[@name='languageChoice']");
-	private static By loginLocator=By.cssSelector("#login-button");
-	private static By errorLocator=By.xpath("//*[contains(text(),'Invalid')]");
-	private static By ackLicCertLocator=By.partialLinkText("Certification");
-	
-	public static void enterUsername(String username)
-	{
-		AutomationHooks.driver.findElement(usernameLocator).sendKeys(username);
+	private WebDriver driver;
+
+	public LoginPage(WebDriver driver) {
+		this.driver = driver;
 	}
-	
-	public static void enterPassword(String password)
-	{
-		AutomationHooks.driver.findElement(passwordLocator).sendKeys(password);
+
+	public void enterUsername(String username) {
+		driver.findElement(usernameLocator).sendKeys(username);
 	}
-	
-	public static void selectLanguageByText(String language)
-	{
-		Select selectLan = new Select(AutomationHooks.driver.findElement(languageLocator));
+
+	public void enterPassword(String password) {
+		driver.findElement(passwordLocator).sendKeys(password);
+	}
+
+	public void selectLanguageByText(String language) {
+		Select selectLan = new Select(driver.findElement(languageLocator));
 		selectLan.selectByVisibleText(language);
 	}
-	
-	public static void clickOnLogin()
-	{
-		AutomationHooks.driver.findElement(loginLocator).click();
+
+	public void clickOnLogin() {
+		driver.findElement(loginLocator).click();
 	}
 
-	public static String getInvalidErrorMessage()
-	{
-		return AutomationHooks.driver.findElement(errorLocator).getText();
+	public String getInvalidErrorMessage() {
+		return driver.findElement(errorLocator).getText();
 	}
-	
-	public static void clickOnAckLicCert()
-	{
-		AutomationHooks.driver.findElement(ackLicCertLocator).click();
+
+	public void clickOnAckLicCert() {
+		driver.findElement(ackLicCertLocator).click();
 	}
-	
+
 }

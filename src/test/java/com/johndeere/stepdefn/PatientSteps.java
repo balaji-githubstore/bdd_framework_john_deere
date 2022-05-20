@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.johndeere.base.AutomationHooks;
 import com.johndeere.pages.DashboardPage;
+import com.johndeere.pages.LoginPage;
 import com.johndeere.pages.PatientDashboardPage;
 import com.johndeere.pages.SearchOrAddPatientPage;
 
@@ -20,16 +21,28 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class PatientSteps {
+	private DashboardPage dashboard; 
+	private SearchOrAddPatientPage sadp;
+	private PatientDashboardPage pdp;
+	
 	private static String actualAlertText;
+	
+	
+	public void initializePageObject()
+	{
+		dashboard=new DashboardPage(AutomationHooks.driver);
+		sadp=new SearchOrAddPatientPage(AutomationHooks.driver);
+		pdp=new PatientDashboardPage(AutomationHooks.driver);
+	}
 
 	@When("I click on Patient menu")
 	public void i_click_on_patient_menu() {
-		DashboardPage.clickOnPatient();
+		dashboard.clickOnPatient();
 	}
 
 	@When("I click on New search menu")
 	public void i_click_on_new_search_menu() {
-		DashboardPage.clickOnNewSearch();
+		dashboard.clickOnNewSearch();
 	}
 
 	@When("I fill the form")
@@ -49,8 +62,8 @@ public class PatientSteps {
 		System.out.println(lists.get(0).get("gender"));
 		System.out.println(lists.get(0).get("licencenumber"));
 
-		SearchOrAddPatientPage.enterFirstname(lists.get(0).get("firstname"));
-		SearchOrAddPatientPage.enterLastname(lists.get(0).get("lastname"));
+		sadp.enterFirstname(lists.get(0).get("firstname"));
+		sadp.enterLastname(lists.get(0).get("lastname"));
 
 		AutomationHooks.driver.findElement(By.id("form_DOB")).sendKeys(lists.get(0).get("dob"));
 		new Select(AutomationHooks.driver.findElement(By.id("form_sex")))
@@ -59,23 +72,23 @@ public class PatientSteps {
 
 	@When("I click on create new patient")
 	public void i_click_on_create_new_patient() {
-		SearchOrAddPatientPage.clickOnCreateNewPatient();
+		sadp.clickOnCreateNewPatient();
 	}
 
 	@When("I click on Confirm Create New Patient")
 	public void i_click_on_confirm_create_new_patient() {
-		SearchOrAddPatientPage.clickOnConfirmCreateNewPatient();
+		sadp.clickOnConfirmCreateNewPatient();
 	}
 
 	@When("I handle the alert")
 	public void i_handle_the_alert() {
-		actualAlertText = PatientDashboardPage.getTextAndHandleAlert();
+		actualAlertText = pdp.getTextAndHandleAlert();
 	}
 
 	@When("I handle the happybirthday pop if available")
 	public void i_handle_the_happybirthday_pop_if_available() {
 		// presence of element
-		PatientDashboardPage.clickOnCloseHappyBirthday();
+		pdp.clickOnCloseHappyBirthday();
 	}
 
 	@Then("alert message should contains {string}")
@@ -85,7 +98,7 @@ public class PatientSteps {
 
 	@Then("I should see the added patient details as {string}")
 	public void i_should_see_the_added_patient_details_as(String expectedPatient) {
-		String actualValue = PatientDashboardPage.getAddedPatientDetail();
+		String actualValue = pdp.getAddedPatientDetail();
 		Assert.assertEquals(expectedPatient, actualValue);
 	}
 

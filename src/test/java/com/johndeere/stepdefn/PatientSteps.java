@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.Select;
 
 import com.johndeere.base.AutomationHooks;
+import com.johndeere.base.DemoSize;
 import com.johndeere.pages.DashboardPage;
 import com.johndeere.pages.PatientDashboardPage;
 import com.johndeere.pages.SearchOrAddPatientPage;
@@ -24,8 +25,10 @@ public class PatientSteps {
 	
 	private static String actualAlertText;
 	
-	public PatientSteps(AutomationHooks hooks)
+	public PatientSteps(AutomationHooks hooks,DemoSize obj)
 	{
+		System.out.println(obj.width);
+		System.out.println(obj.height);
 		this.hooks=hooks;
 		initializePageObject();
 	}

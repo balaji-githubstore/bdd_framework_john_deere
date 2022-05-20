@@ -3,6 +3,7 @@ package com.johndeere.stepdefn;
 import org.junit.Assert;
 
 import com.johndeere.base.AutomationHooks;
+import com.johndeere.base.DemoSize;
 import com.johndeere.pages.DashboardPage;
 import com.johndeere.pages.LoginPage;
 
@@ -15,9 +16,12 @@ public class LoginSteps  {
 	private LoginPage login;
 	private DashboardPage dashbord;
 	
-	public LoginSteps(AutomationHooks hooks)
+	public LoginSteps(AutomationHooks hooks,DemoSize obj)
 	{
 		this.hooks=hooks;
+		System.out.println(obj.width);
+		System.out.println(obj.height);
+		obj.width=200;
 	}
 
 	@Given("I have browser with OpenEMR page")
